@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.mapper.MaintenanceRequestMapper">
+    <resultMap id="MaintenanceRequestResultMap" type="com.springboot.entity.MaintenanceRequest">
+    <id property="id" column="id"/>
+    <result property="roomNumber" column="room_number"/>
+    <result property="status" column="status"/>
+    <result property="requestTime" column="request_time"/>
+    <result property="complateTime" column="complate_time"/>
+    <result property="description" column="description"/>
+    <result property="userId" column="userid"/>
+    <result property="adminId" column="adminId"/>
+    <result column="ownerName" property="ownerName" />
+    <result column="adminName" property="adminName" />
+
+    </resultMap>
+
+    <select id="findbySearch" resultType="com.springboot.entity.MaintenanceRequest">
+--         select * from weixiu
+        SELECT weixiu.*,user.name AS ownerName,admin.`name` as adminName
+        FROM weixiu
+        LEFT JOIN user ON weixiu.userid = user.id
+        LEFT JOIN admin ON weixiu.adminid = admin.id
+        <where>
+            <if test="params!=null and params.name!=null and params.name!=''">
+                and user.name like concat('%',#{params.name},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getByOwnerName" resultType="com.springboot.entity.MaintenanceRequest">
+        SELECT weixiu.*,user.name AS ownerName,admin.`name` as adminName
+        FROM weixiu
+        LEFT JOIN user ON weixiu.userid = user.id
+        LEFT JOIN admin ON weixiu.adminid = admin.id
+       where weixiu.userid=#{ownerId}
+    </select>
+
+    <select id="findAll" resultType="com.springboot.entity.MaintenanceRequest">
+        --                 SELECT * FROM car_space
+        SELECT weixiu.*,user.name AS ownerName,admin.`name` as adminName
+        FROM weixiu
+                 LEFT JOIN user ON weixiu.userid = user.id
+                 LEFT JOIN admin ON weixiu.adminid = admin.id
+
+    </select>
+
+</mapper>

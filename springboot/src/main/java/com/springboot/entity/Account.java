@@ -61,6 +61,15 @@ public class Account {
     @Transient
     private String token;
 
+    @Column(name = "total_money")
+    private Double totalMoney;
+
+    @Column(name = "pay_way")
+    private String payWay;
+
+    @Column(name = "pay_money")
+    private Double payMoney;
+
     public Account(){};
     public Account(Integer id, String name, String password, String sex, Integer age, String phone) {
         this.id = id;
@@ -133,5 +142,29 @@ public class Account {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Double getTotalMoney() {
+        return totalMoney;
+    }
+
+    public void setTotalMoney(Double totalMoney) {
+        this.totalMoney = totalMoney;
+    }
+
+    public String getPayWay() {
+        return payWay;
+    }
+
+    public void setPayWay(String payWay) {
+        this.payWay = payWay;
+    }
+
+    public Double getPayMoney() {
+        return payMoney;
+    }
+
+    public void setPayMoney(Double payMoney) {
+        this.payMoney = payMoney;
     }
 }

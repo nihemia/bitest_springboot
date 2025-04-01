@@ -2,12 +2,12 @@ package com.springboot.mapper;
 
 
 import com.springboot.common.Params;
-import com.springboot.entity.CarSpace;
+import com.springboot.entity.Notice;
+import com.springboot.entity.Type;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
-
 
 import java.util.List;
 
@@ -21,12 +21,11 @@ import java.util.List;
  */
 
 @Repository
-//@Mapper
-//public interface AdminMapper extends BaseMapper<Admin> {
-public interface CarsitesMapper extends Mapper<CarSpace> {
+public interface NoticeMapper extends Mapper<Notice> {
 
-    List<CarSpace> findBySearch(@Param("params") Params params);
 
-    @Select("select * from carsties where csNum=#{csNum} limit 1")
-    CarSpace findByNum(@Param("csNum") Integer csNum);
+    List<Notice> findbySearch(@Param("params") Params params);
+
+    @Select("select * from notice order by time desc limit 5")
+    List<Notice> findAll();
 }

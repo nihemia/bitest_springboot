@@ -13,6 +13,7 @@ package com.springboot.service;
 //import javax.annotation.Resource;
 //import java.util.List;
 
+import com.auth0.jwt.JWT;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.springboot.common.JwtTokenUtils;
@@ -120,13 +121,16 @@ public class AdminService {
         }
         //4、用户名密码无误
         //生成该登录用户对应token，与user一起返回到前端
-        String token=JwtTokenUtils.genToken(user.getId().toString(),user.getPassword());
+//        String token=JwtTokenUtils.genToken(user.getId().toString(),user.getPassword());
+        String token=JwtTokenUtils.genToken(user.getId().toString(),user.getPassword(),"ROLE_ADMIN");
         user.setToken(token);
         return user;
     }
 
     public Admin findById(Integer id) {
-        return adminMapper.selectByPrimaryKey(id);
+
+//        return adminMapper.selectByPrimaryKey(id);
+        return adminMapper.selectUserById(id);
     }
 
 
@@ -143,4 +147,39 @@ public class AdminService {
         }
         return false;
     }
+
+    public Admin getUserByToken(String token) {
+        try {
+            // 解析token获取用户ID
+            String userIdStr = JWT.decode(token).getAudience().get(0);
+            Integer userId = Integer.valueOf(userIdStr);
+            // 根据用户ID从数据库中查询用户信息
+            return adminMapper.selectUserById(userId);
+        } catch (Exception e) {
+            // 处理解析token或查询用户信息时可能出现的异常
+            return null;
+        }
+    }
+
+    public List<Admin> findAllName() {
+        return adminMapper.selectAllName();
+    }
+
+    //检查输入的旧密码是否与数据库中的密码一致
+    public boolean checkPassword(String username, String oldPassword) {
+        Admin admin = adminMapper.findByName(username);
+        if (admin != null) {
+            return admin.getPassword().equals(oldPassword);
+        }
+        return false;
+    }
+
+    public void updatePassword(String username, String newPassword) {
+        Admin admin = adminMapper.findByName(username);
+        if (admin != null) {
+            admin.setPassword(newPassword);
+            adminMapper.save(username,newPassword);
+        }
+    }
+
 }

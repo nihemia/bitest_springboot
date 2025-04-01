@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.mapper.HouseMapper">
+    <!-- 定义 resultMap 用于映射 CarSpace 实体 -->
+    <resultMap id="HouseResultMap" type="com.springboot.entity.House">
+        <id property="id" column="id"/>
+        <result property="houseNumber" column="house_number"/>
+        <result property="status" column="status"/>
+        <result property="houseBuild" column="houseBuild"/>
+        <result property="houseDate" column="houseDate"/>
+        <result property="ownerId" column="owner_id"/>
+        <result column="ownerName" property="ownerName" />
+<!--        <association property="user" javaType="com.springboot.entity.User">-->
+<!--            <id property="id" column="owner_id"/>-->
+<!--            <result property="name" column="owner_name"/>-->
+<!--        </association>-->
+    </resultMap>
+
+    <!-- 查询所有车位信息 -->
+    <select id="findAllName" resultType="com.springboot.entity.House">
+--         SELECT * FROM car_space
+    select house.*,user.name AS ownerName
+    from house
+         left join user on house.owner_id=user.id
+    </select>
+
+    <select id="findAll" resultType="com.springboot.entity.House">
+--                 SELECT * FROM car_space
+                select house.*,user.name AS ownerName
+                from house
+                left join user on house.owner_id=user.id
+
+    </select>
+
+
+    <!-- 根据 ID 查询车位信息 -->
+    <select id="findById" resultType="com.springboot.entity.House">
+--         SELECT * FROM car_space WHERE id = #{id}
+select house.*, user.name AS ownerName
+from house
+         left join user on house.owner_id = user.id
+where house.id = #{id}
+    </select>
+
+    <!-- 添加车位信息 -->
+<!--    <insert id="save" parameterType="com.springboot.entity.CarSpace">-->
+<!--        INSERT INTO car_space (space_number, status, license_plate, owner_id)-->
+<!--        VALUES (#{spaceNumber}, #{status}, #{licensePlate}, #{user.id})-->
+<!--    </insert>-->
+
+    <!-- 更新车位信息 -->
+<!--    <update id="update" parameterType="com.springboot.entity.CarSpace">-->
+<!--        UPDATE car_space-->
+<!--        SET space_number = #{spaceNumber},-->
+<!--            status = #{status},-->
+<!--            license_plate = #{licensePlate},-->
+<!--            owner_id = #{user.id}-->
+<!--        WHERE id = #{id}-->
+<!--    </update>-->
+
+    <!-- 根据 ID 删除车位信息 -->
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM house WHERE id = #{id}
+    </delete>
+
+    <!-- 根据业主 ID 查询车位信息 -->
+    <select id="findByOwnerId" resultType="com.springboot.entity.House">
+        select house.*, user.name AS ownerName
+        from house
+        left join user on house.owner_id = user.id
+        where house.owner_id = #{ownerId}
+    </select>
+
+    <select id="findbySearch" resultType="com.springboot.entity.House">
+
+        select house.*, user.name AS ownerName
+        from house
+        left join user on house.owner_id = user.id
+        <where>
+            <if test="params!=null and params.name!=null and params.name!=''">
+                and `user`.`name` like concat('%',#{params.name},'%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -13,6 +13,7 @@ import com.github.pagehelper.PageInfo;
 import com.springboot.common.Params;
 import com.springboot.common.Result;
 import com.springboot.entity.Admin;
+import com.springboot.entity.User;
 import com.springboot.service.AdminService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,7 +81,11 @@ public class AdminController {
     }
 
 
-
+    @GetMapping("/names")
+    public Result findAllName() {
+        List<Admin> list=adminService.findAllName();
+        return Result.success(list);
+    }
 
 
 

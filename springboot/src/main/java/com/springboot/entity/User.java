@@ -25,12 +25,10 @@ public class User extends  Account {
 
 //    private static final long serialVersionUID = 1L;
 
-//    @ApiModelProperty(value = "主键ID")
-//    @TableId(value = "id", type = IdType.AUTO)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @JsonProperty("id")
-    private Integer id;
+
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Integer id;
 
 //    @ApiModelProperty(value = "姓名")
     @Column(name="name")
@@ -56,6 +54,15 @@ public class User extends  Account {
 
     @Column(name="role")
     private String role;
+
+    @Column(name = "total_money")
+    private Double totalMoney;
+
+    @Column(name = "pay_way")
+    private String payWay;
+
+    @Column(name = "pay_money")
+    private Double payMoney;
 
 
     //注解表明该字段不是数据库中的字段
@@ -135,4 +142,30 @@ public class User extends  Account {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public Double getTotalMoney() {
+        return totalMoney;
+    }
+
+    public void setTotalMoney(Double totalMoney) {
+        this.totalMoney = totalMoney;
+    }
+
+    public String getPayWay() {
+        return payWay;
+    }
+
+    public void setPayWay(String payWay) {
+        this.payWay = payWay;
+    }
+
+    public Double getPayMoney() {
+        return payMoney;
+    }
+
+    public void setPayMoney(Double payMoney) {
+        this.payMoney = payMoney;
+    }
+
+
 }

@@ -10,6 +10,8 @@
         <result column="age" property="age" />
         <result column="phone" property="phone" />
         <result column="role" property="role" />
+        <result column="pay_way" property="payWay" />
+        <result column="pay_money" property="payMoney" />
     </resultMap>
 
 <!--    2、基于直接xml方式查询数据库数据-->

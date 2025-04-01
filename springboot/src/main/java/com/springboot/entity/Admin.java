@@ -33,9 +33,8 @@ public class Admin extends  Account{
 
 //    @ApiModelProperty(value = "主键ID")
 //    @TableId(value = "id", type = IdType.AUTO)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @JsonProperty("id")
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
 //    @ApiModelProperty(value = "姓名")

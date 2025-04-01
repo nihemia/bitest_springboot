@@ -28,4 +28,6 @@ public interface TypeMapper extends Mapper<Type> {
 
     @Select("select * from type where name=#{name} limit 1")
     Type findByName(@Param("name") String name);
+
+
 }
